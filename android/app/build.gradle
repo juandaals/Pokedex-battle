@@ -114,5 +114,24 @@ dependencies {
         implementation jscFlavor
     }
 }
+apply plugin: 'com.android.application'
+
+android {
+  ...
+}
+
+dependencies {
+  implementation fileTree(dir: "libs", include: ["*.jar"])
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"  // From node_modules
+
+  implementation project(':react-native-vector-icons')
+}
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+proyecto.ext.vectoricons = [
+     iconFontNames : [ ' MaterialIcons.ttf ' , ' EvilIcons.ttf ' ] // Especificar archivos de fuentes 
+] 
+
+aplicar desde : archivo( " ../../node_modules/react-native-vector-icons/fonts.gradle " )
