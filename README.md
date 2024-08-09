@@ -125,6 +125,9 @@ lo mismo con el ActivityIndicator si isNext tiene siguiente pokemon entonces se 
 como usar el useContext
 
 primero crear tu contexto que vas a usar
+
+esto se crea en una carpeta llamada hooks => useAuth.tsx
+
 import {useContext} from 'react';
 import {AuthContext} from '../context/AuthContext';
 
@@ -132,10 +135,29 @@ export default () => useContext(AuthContext);
 
 esto hace que todo lo que este adentro del contexto conecte en esta caso los estados de la navegacion y haga un posible render a todos sus hijos
 
+una vez creado esto creamos una carpeta llamada 
 
+context que es lo que se usara en toda la aplicacion
 
+aqui creamos el type Auth donde sera creado 
+state donde typamos 
 
+actions como su nombre lo dice funciones que hacen algo 
 
+creamos la constate 
+export const AuthContext =React.createContext<Auth>({});
+
+donde le metemos el tipado <Auth>
+
+despues creamos el AuthProvider que es el que va a amarrar en nuestra APP lo que vamos a usar o donde vamos a usar esto y toca poner adentro de este o global como sea que se necesite
+
+se crea una constante llamada children para que esta le pase todas las props a los hijos 
+
+se crea un estado 
+
+en este caso le pasamos login como una funcion que va a pasar la data 
+
+retornamos AuthContext.Provider ya que esto esl o que le da el valor para pasar las props a los children
 
 
 

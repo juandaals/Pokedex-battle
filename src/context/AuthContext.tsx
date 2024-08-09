@@ -1,14 +1,20 @@
-import React, {useState, createContext} from 'react';
+import React, {useState} from 'react';
 export type Auth = {
     state?:{
         auth: any,
+        user?:any
+        
     },
     actions?: {
         login: (userData: any) => void,
         logout: () => void,
     }
 };
-export const AuthContext =React.createContext<Auth>({});
+export const AuthContext =React.createContext<Auth>({
+  state:{auth : undefined},
+  actions: {login: () => {} , logout: () => {}},
+  
+});
 
 export const AuthProvider = (props:any) => {
   const {children} = props;
@@ -34,6 +40,8 @@ export const AuthProvider = (props:any) => {
   };
 
   return (
-    <AuthContext.Provider value={valueContext}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={valueContext}>
+      {children}
+    </AuthContext.Provider>
   );
 };

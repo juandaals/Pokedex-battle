@@ -6,6 +6,7 @@ import Header from '../components/Pokemon/Header';
 import Types from '../components/Pokemon/Types';
 import Stats from '../components/Stats';
 import { PokemonContext } from '../context/PokemonContext';
+import Favorite from '../components/Pokemon/Favorite';
 
 type PokeType = {
   stats: any;
@@ -23,8 +24,15 @@ export default function Pokemon(props: any) {
   const {
     route: {params},
     navigation,
-  } = props;
-  const {state, actions} = useContext(PokemonContext)
+} = props;
+  const {state, actions} = useContext(PokemonContext
+    )
+  useEffect(() => {
+  navigation.setOptions({
+    headerRight: () => <Favorite/>,
+  }); 
+  }, [navigation,params.id])
+  
   useEffect(() => {
     if(params.id){
     actions?.searchPokemon(params.id);

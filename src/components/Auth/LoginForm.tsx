@@ -11,13 +11,11 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {user, UserDetails} from '../../utils/UserDB';
 import useAuth from '../../hooks/useAuth';
-import {AuthContext} from '../../context/AuthContext';
 
 export default function LoginForm() {
   const [errorr, setError] = useState('');
-  const {actions} = useContext(AuthContext); // Replace {} with the correct context type
-  const {state} = useAuth();
-  console.log(state);
+  const {actions} = useAuth();
+  console.log(useAuth());
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -31,8 +29,7 @@ export default function LoginForm() {
       if (username !== user.Username || password !== user.password) {
         setError('Usuario y la contraseña no son correctos');
       } else {
-        console.log('Usuario incorrecto ');
-        console.log(UserDetails);
+        actions?.login(UserDetails);
       }
     },
   });
@@ -42,11 +39,14 @@ export default function LoginForm() {
       <TextInput
         placeholder="Nombre de usuario"
         style={styles.input}
+        //el autoCapitalize hace que no ponga la primera letra en mayuscula
         autoCapitalize="none"
+        // este value hace que el input se llene con el valor que le pasamos
         value={formik.values.username}
-        /*  queresmo que => de formik setee el field el que le 
+        /*  queremos que => de formik seteé el field el que le 
         voy a decir entonces quiero que en la propiedad 
         username me setees el valor text */
+        // el onChangeText es para que se actualize el valor del input
         onChangeText={text => formik.setFieldValue('username', text)}
       />
       <TextInput
@@ -58,7 +58,9 @@ export default function LoginForm() {
         value={formik.values.password}
         onChangeText={text => formik.setFieldValue('password', text)}
       />
-      <Button title="Iniciar sesion" onPress={formik.handleSubmit} />
+      {/* para solucionar el problema del onPress aun que deja pasar  el formik 
+      hay que ponerle una funcion para que no aparesca error de button */}
+      <Button title="Iniciar sesion" onPress={ () => formik.handleSubmit()} />
       <Text style={styles.error}>{formik.errors.username}</Text>
       <Text style={styles.error}>{formik.errors.password}</Text>
       <Text style={styles.error}>{errorr}</Text>
